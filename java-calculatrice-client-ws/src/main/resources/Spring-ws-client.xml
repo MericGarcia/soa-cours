@@ -6,6 +6,11 @@
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
  
-<jaxws:client id="helloClient" serviceClass="fr.keyconsulting.formation.service.IHelloService" address="http://localhost:9090/webservice/services/HelloWorld" />
-
+    <jaxws:client id="calculClient"
+                  serviceClass="fr.keyconsulting.formation.service.ICalculService"
+                  address="http://localhost:8080/webservice/services/calcul" />
+                  
+                  <jaxws:client id="helloClient"
+                  serviceClass="fr.keyconsulting.formation.service.IHelloService"
+                  address="http://localhost:8080/webservice/services/HelloWorld" />
 </beans>

@@ -2,6 +2,7 @@ package fr.keyconsulting.formation.controller;
 
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.springframework.context.ApplicationContext;
@@ -10,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import fr.keyconsulting.formation.model.Calcul;
 import fr.keyconsulting.formation.model.Operand;
 import fr.keyconsulting.formation.model.Operators;
+import fr.keyconsulting.formation.service.ICalculService;
 import fr.keyconsulting.formation.service.IHelloService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -54,12 +56,21 @@ public class Controller implements Initializable {
 	private TableColumn<Calcul, LocalDateTime> time;
 	
 	IHelloService service;
+	
+	ICalculService calculService;
 
 	public void initialize(URL location, ResourceBundle resources) {
-		service = (IHelloService)context.getBean("helloClient");
+		service = (IHelloService) context.getBean("helloClient");
+		calculService = (ICalculService) context.getBean("calculClient");
 		operator.setItems(FXCollections.observableArrayList(Operators.all()));
+		List<Calcul> calculs = calculService.getAll();
+		if(calculs != null && !calculs.isEmpty()){
+			tableView.setItems(FXCollections.observableList(calculs));
+		}
+		else{
+			tableView.setItems(FXCollections.observableArrayList());
+		}
 		time.setCellFactory(new DateTimeCellFactory<Calcul>());
-		title.setText(service.sayHi("inconnu"));
 	}
 
 	public void run(ActionEvent event) {
@@ -67,8 +78,9 @@ public class Controller implements Initializable {
 				new Operand(rightOperand.getText()), commentary.getText());
 		calcul.setAuthor(author.getText());
 		tableView.getItems().add(calcul);
+		calculService.addCalcul(calcul);
+		title.setText(service.sayHi(calcul.getAuthor()));
 		result.setText(calcul.execute().getValue().toPlainString());
-		title.setText(service.sayHi(calcul.getAuthor() != null && !calcul.getAuthor().isEmpty() ? calcul.getAuthor() : "inconnu"));
 	}
 
 }
