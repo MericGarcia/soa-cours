@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.formation.keyconsulting.fr/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="CalculServiceService" targetNamespace="http://service.formation.keyconsulting.fr/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.formation.keyconsulting.fr/" elementFormDefault="unqualified" targetNamespace="http://service.formation.keyconsulting.fr/" version="1.0">
+
+  <xs:element name="addCalcul" type="tns:addCalcul"/>
+
+  <xs:element name="addCalculResponse" type="tns:addCalculResponse"/>
+
+  <xs:element name="getAll" type="tns:getAll"/>
+
+  <xs:element name="getAllResponse" type="tns:getAllResponse"/>
+
+  <xs:complexType name="addCalcul">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:calcul"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="calcul">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="leftOperand" type="tns:operand"/>
+      <xs:element minOccurs="0" name="operator" type="tns:operator"/>
+      <xs:element minOccurs="0" name="rightOperand" type="tns:operand"/>
+      <xs:element minOccurs="0" name="time" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="operand">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="value" type="xs:decimal"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="operator">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="plusOperator">
+    <xs:complexContent>
+      <xs:extension base="tns:operator">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="minusOperator">
+    <xs:complexContent>
+      <xs:extension base="tns:operator">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="divideOperator">
+    <xs:complexContent>
+      <xs:extension base="tns:operator">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="multiplyOperator">
+    <xs:complexContent>
+      <xs:extension base="tns:operator">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="addCalculResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getAll">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getAllResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:calcul"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="addCalcul">
+    <wsdl:part element="tns:addCalcul" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addCalculResponse">
+    <wsdl:part element="tns:addCalculResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllResponse">
+    <wsdl:part element="tns:getAllResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAll">
+    <wsdl:part element="tns:getAll" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ICalculService">
+    <wsdl:operation name="addCalcul">
+      <wsdl:input message="tns:addCalcul" name="addCalcul">
+    </wsdl:input>
+      <wsdl:output message="tns:addCalculResponse" name="addCalculResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAll">
+      <wsdl:input message="tns:getAll" name="getAll">
+    </wsdl:input>
+      <wsdl:output message="tns:getAllResponse" name="getAllResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CalculServiceServiceSoapBinding" type="tns:ICalculService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addCalcul">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addCalcul">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addCalculResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAll">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAll">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CalculServiceService">
+    <wsdl:port binding="tns:CalculServiceServiceSoapBinding" name="CalculServicePort">
+      <soap:address location="http://localhost:8080/webservice/services/calcul"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

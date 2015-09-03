@@ -10,7 +10,8 @@
     <name>Formation Parent Module</name>
 
     <modules>
-        <module>java-model </module>
+<module>java-jms</module>
+        <module>java-model</module>
         <module>java-persistence</module>
 		<module>java-calculatrice-client-ws</module>
 		<module>java-ws-interface</module>
