@@ -52,7 +52,7 @@
 		</dependency>
 		<dependency>
 			<groupId>fr.keyconsulting.formation</groupId>
-			<artifactId>webservice-interface</artifactId>
+			<artifactId>persistence</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

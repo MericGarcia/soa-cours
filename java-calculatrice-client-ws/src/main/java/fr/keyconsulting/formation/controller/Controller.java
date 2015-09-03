@@ -10,7 +10,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import fr.keyconsulting.formation.model.Calcul;
 import fr.keyconsulting.formation.model.Operand;
 import fr.keyconsulting.formation.model.Operators;
-import fr.keyconsulting.formation.service.IHelloService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +20,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
+import fr.keyconsulting.formation.facade.ILastService;
+import fr.keyconsulting.formation.facade.LastService;
 
 public class Controller implements Initializable {
 	
@@ -53,10 +55,15 @@ public class Controller implements Initializable {
 	@FXML
 	private TableColumn<Calcul, LocalDateTime> time;
 	
-	IHelloService service;
+	ILastService service;
 
 	public void initialize(URL location, ResourceBundle resources) {
+		service = new LastService();
 		operator.setItems(FXCollections.observableArrayList(Operators.all()));
+		Calcul calcul = service.getLastCalcul();
+		if(calcul!=null){
+			tableView.setItems((FXCollections.observableArrayList(calcul)));
+		}
 		time.setCellFactory(new DateTimeCellFactory<Calcul>());
 	}
 
