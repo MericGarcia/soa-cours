@@ -10,6 +10,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import fr.keyconsulting.formation.model.Calcul;
 import fr.keyconsulting.formation.model.Operand;
 import fr.keyconsulting.formation.model.Operators;
+import fr.keyconsulting.formation.persistence.ORMPersistenceService;
+import fr.keyconsulting.formation.service.PersistenceService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -72,6 +74,7 @@ public class Controller implements Initializable {
 				new Operand(rightOperand.getText()), commentary.getText());
 		calcul.setAuthor(author.getText());
 		tableView.getItems().add(calcul);
+		service.persist(calcul);
 		result.setText(calcul.execute().getValue().toPlainString());
 	}
 

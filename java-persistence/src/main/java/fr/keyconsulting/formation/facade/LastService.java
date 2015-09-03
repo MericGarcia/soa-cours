@@ -1,5 +1,9 @@
 package fr.keyconsulting.formation.facade;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import fr.keyconsulting.formation.model.Calcul;
 import fr.keyconsulting.formation.persistence.FilePersistenceService;
 import fr.keyconsulting.formation.persistence.ORMPersistenceService;
@@ -12,8 +16,12 @@ public class LastService implements ILastService{
 
 	@Override
 	public Calcul getLastCalcul() {
-		// get the last persistence from the two service
 		return null;
+	}
+
+	@Override
+	public void persist(Calcul calcul) {
+		ormPersitence.persist(calcul);
 	}
 
 	
