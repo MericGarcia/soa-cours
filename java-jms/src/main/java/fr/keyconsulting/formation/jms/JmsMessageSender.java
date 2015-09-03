@@ -43,8 +43,7 @@ public class JmsMessageSender {
 		this.jmsTemplateCalcul.send(new MessageCreator() {
 			@Override
 			public Message createMessage(Session session) throws JMSException {
-				Message message = null;
-				//utiliser le calcul en entrée pour créer un message
+				Message message = session.createObjectMessage(calcul);
 				return message;
 			}
 		});

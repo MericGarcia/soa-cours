@@ -74,7 +74,11 @@ public class Controller implements Initializable {
 	}
 
 	private void addEnQueuedCalculToList(List<Calcul> calculs) {
-		//implémenter ici la récupération des calculs grâce au service
+		Calcul message = service.nextCalcul();
+		while(message!=null){
+			calculs.add(message);
+			message = service.nextCalcul();
+		}
 	}
 
 	private void addCalculsToTableItems(List<Calcul> calculs) {
@@ -106,7 +110,7 @@ public class Controller implements Initializable {
 	private void sendCalculAndAuthorToJmsServices(Calcul calcul) {
 		service.sendForListener(calcul.getAuthor() != null ? calcul.getAuthor() : "none");
 		service.send(calcul.getAuthor() != null ? calcul.getAuthor() : "none");
-		//ajouter ici l'envoi d'un calcul dans une queue
+		service.send(calcul);
 	}
 	
 	

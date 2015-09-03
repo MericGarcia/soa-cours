@@ -34,8 +34,7 @@ public class JmsMessageConsumer {
 	}
 	
 	public Calcul getFollowingCalcul() {
-		Calcul message = null;
-		// utliser jmsTemplateCalcul pour récuperer le prochain calcul dans la file
+		Calcul message = (Calcul) jmsTemplateCalcul.receiveAndConvert();
 		return message;
 	}
 
