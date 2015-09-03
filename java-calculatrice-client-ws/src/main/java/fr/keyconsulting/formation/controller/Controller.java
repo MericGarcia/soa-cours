@@ -24,7 +24,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class Controller implements Initializable {
-
+	
 	ApplicationContext context = new ClassPathXmlApplicationContext("/Spring-ws-client.xml");
 
 	@FXML
@@ -35,19 +35,19 @@ public class Controller implements Initializable {
 
 	@FXML
 	private TextField rightOperand;
-
+	
 	@FXML
 	private TextField commentary;
-
+	
 	@FXML
 	private TextField author;
-
+	
 	@FXML
 	private Label title;
 
 	@FXML
 	private TextArea result;
-
+	
 	@FXML
 	private TextArea previousAuthors;
 
@@ -56,12 +56,12 @@ public class Controller implements Initializable {
 
 	@FXML
 	private TableColumn<Calcul, LocalDateTime> time;
-
+	
 	JmsServiceHelper service;
 
 	public void initialize(URL location, ResourceBundle resources) {
 		service = new JmsServiceHelper();
-		operator.setItems(FXCollections.observableArrayList(Operators.all()));
+		operator.setItems(FXCollections.observableArrayList(Operators.all()));	
 		tableView.setItems(FXCollections.observableArrayList());
 		time.setCellFactory(new DateTimeCellFactory<Calcul>());
 		StringJoiner sj = new StringJoiner(";");
@@ -70,10 +70,11 @@ public class Controller implements Initializable {
 	}
 
 	private void addEnQueuedMessageTo(StringJoiner sj) {
-		/*
-		 * utiliser ici la fonction next du service JMS pour récuperer les
-		 * messages dans la file au démarrage
-		 */
+		String message = service.next();
+		while(message!=null){
+			sj.add(message);
+			message = service.next();
+		}
 	}
 
 	public void run(ActionEvent event) {
@@ -86,7 +87,10 @@ public class Controller implements Initializable {
 	}
 
 	private void sendAuthorToJmsServices(Calcul calcul) {
-		// implémenter ici l'envoie de l'author dans les deux files JMS
+		service.sendForListener(calcul.getAuthor() != null ? calcul.getAuthor() : "none");
+		service.send(calcul.getAuthor() != null ? calcul.getAuthor() : "none");
 	}
+	
+	
 
 }
