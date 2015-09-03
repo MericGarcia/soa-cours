@@ -25,11 +25,19 @@ public class JmsServiceHelper {
 		jmsMessageSender.send(text);
 	}
 	
+	public void send(Calcul calcul){
+		jmsMessageSender.send(calcul);
+	}
+	
 	public void sendForListener(String text){
 		jmsMessageSender.sendForListener(text);
 	}
 	
 	public String next(){
 		return jmsMessageConsumer.getFollowingText();
+	}
+	
+	public Calcul nextCalcul(){
+		return jmsMessageConsumer.getFollowingCalcul();
 	}
 }

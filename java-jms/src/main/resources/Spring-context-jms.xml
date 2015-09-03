@@ -43,6 +43,11 @@
 		<!-- name of the queue -->
 		<constructor-arg index="0" value="ListenQueue" />
 	</bean>
+	
+	<bean id="calculDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<!-- name of the queue -->
+		<constructor-arg index="0" value="CalculQueue" />
+	</bean>
 
 	<!-- JmsTemplate Definition -->
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
@@ -54,6 +59,12 @@
 	<bean id="jmsTemplateForListener" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="connectionFactory" />
 		<property name="defaultDestination" ref="secondDestination" />
+	</bean>
+	
+	<!-- Calcul JmsTemplate Definition -->
+	<bean id="jmsTemplateCalcul" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestination" ref="calculDestination" />
 	</bean>
 
 	<jms:listener-container container-type="default"

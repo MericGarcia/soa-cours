@@ -10,6 +10,8 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
+import fr.keyconsulting.formation.model.Calcul;
+
 @Service
 public class JmsMessageSender {
 
@@ -20,6 +22,10 @@ public class JmsMessageSender {
 	@Autowired
 	@Qualifier("jmsTemplateForListener")
 	private JmsTemplate jmsTemplateForListener;
+	
+	@Autowired
+	@Qualifier("jmsTemplateCalcul")
+	private JmsTemplate jmsTemplateCalcul;
 
 	public void send(final String messageText) {
 
@@ -27,6 +33,18 @@ public class JmsMessageSender {
 			@Override
 			public Message createMessage(Session session) throws JMSException {
 				Message message = session.createTextMessage(messageText);
+				return message;
+			}
+		});
+	}
+	
+	public void send(final Calcul calcul) {
+
+		this.jmsTemplateCalcul.send(new MessageCreator() {
+			@Override
+			public Message createMessage(Session session) throws JMSException {
+				Message message = null;
+				//utiliser le calcul en entrée pour créer un message
 				return message;
 			}
 		});

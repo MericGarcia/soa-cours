@@ -2,6 +2,8 @@ package fr.keyconsulting.formation.controller;
 
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.StringJoiner;
 
@@ -62,11 +64,26 @@ public class Controller implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		service = new JmsServiceHelper();
 		operator.setItems(FXCollections.observableArrayList(Operators.all()));	
-		tableView.setItems(FXCollections.observableArrayList());
+		List<Calcul> calculs = new ArrayList<Calcul>();
 		time.setCellFactory(new DateTimeCellFactory<Calcul>());
 		StringJoiner sj = new StringJoiner(";");
 		addEnQueuedMessageTo(sj);
+		addEnQueuedCalculToList(calculs);
+		addCalculsToTableItems(calculs);
 		previousAuthors.setText(sj.toString());
+	}
+
+	private void addEnQueuedCalculToList(List<Calcul> calculs) {
+		//implémenter ici la récupération des calculs grâce au service
+	}
+
+	private void addCalculsToTableItems(List<Calcul> calculs) {
+		if(calculs != null && !calculs.isEmpty()){
+			tableView.setItems(FXCollections.observableArrayList(calculs));
+		}
+		else{
+			tableView.setItems(FXCollections.observableArrayList());
+		}
 	}
 
 	private void addEnQueuedMessageTo(StringJoiner sj) {
@@ -82,13 +99,14 @@ public class Controller implements Initializable {
 				new Operand(rightOperand.getText()), commentary.getText());
 		calcul.setAuthor(author.getText());
 		tableView.getItems().add(calcul);
-		sendAuthorToJmsServices(calcul);
+		sendCalculAndAuthorToJmsServices(calcul);
 		result.setText(calcul.execute().getValue().toPlainString());
 	}
 
-	private void sendAuthorToJmsServices(Calcul calcul) {
+	private void sendCalculAndAuthorToJmsServices(Calcul calcul) {
 		service.sendForListener(calcul.getAuthor() != null ? calcul.getAuthor() : "none");
 		service.send(calcul.getAuthor() != null ? calcul.getAuthor() : "none");
+		//ajouter ici l'envoi d'un calcul dans une queue
 	}
 	
 	
