@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://fr.keyconslting.ws" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl1="http://service1.formation.keyconsulting.fr/" xmlns:wsdl2="http://service2.formation.keyconsulting.fr/" name="WS_invocations" targetNamespace="http://fr.keyconslting.ws">
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     TYPE DEFINITION - List of services participating in this BPEL process 
+     The default output of the BPEL designer uses strings as input and 
+     output to the BPEL Process. But you can define or import any XML 
+     Schema type and us them as part of the message types.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="WS1PLT">
+    <plnk:role name="WS1PLRole" portType="wsdl1:IHelloService"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="WS2PLT">
+    <plnk:role name="WS2PLTRole" portType="wsdl2:IHelloService2"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="WS1PTL">
+    <plnk:role name="WS1PTLRole" portType="wsdl1:IHelloService"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="WS2PTL">
+    <plnk:role name="WS2PTLRole" portType="wsdl2:IHelloService2"/>
+  </plnk:partnerLinkType>
+    <import location="HelloWorld.wsdl" namespace="http://service1.formation.keyconsulting.fr/"/>
+    <import location="HelloWorld2.wsdl" namespace="http://service2.formation.keyconsulting.fr/"/>
+    <types>  
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://fr.keyconslting.ws">
+                
+            <element name="WS_invocationsRequest">
+                <complexType>
+                    <sequence>
+                        <element name="input" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+                  
+            <element name="WS_invocationsResponse">
+                <complexType>
+                    <sequence>
+                        <element name="result" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+            
+        </schema>
+    </types>
+  
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     MESSAGE TYPE DEFINITION - Definition of the message types used as 
+     part of the port type defintions
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <message name="WS_invocationsRequestMessage">
+        <part element="tns:WS_invocationsRequest" name="payload"/>
+    </message>
+    
+    <message name="WS_invocationsResponseMessage">
+        <part element="tns:WS_invocationsResponse" name="payload"/>
+    </message>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PORT TYPE DEFINITION - A port type groups a set of operations into
+     a logical service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <!-- portType implemented by the WS_invocations BPEL process -->
+    <portType name="WS_invocations">
+        <operation name="initiate">
+            <input message="tns:WS_invocationsRequestMessage"/>
+			<output message="tns:WS_invocationsResponseMessage"/>
+        </operation>
+    </portType>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+         the WS_invocations partnerLinkType binds the provider and
+         requester portType into an asynchronous conversation.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="WS_invocations">
+        <plnk:role name="WS_invocationsProvider" portType="tns:WS_invocations"/>
+        <plnk:role name="WS_invocationsRequester" portType="tns:WS_invocations"/>
+    </plnk:partnerLinkType>   
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     BINDING DEFINITION - Defines the message format and protocol details
+     for a web service.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <binding name="WS_invocationsBinding" type="tns:WS_invocations">
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<operation name="initiate">
+    		<soap:operation
+    			soapAction="http://fr.keyconslting.ws/initiate" />
+    		<input>
+    			<soap:body use="literal" />
+    		</input>
+    		<output>
+    			<soap:body use="literal" />
+    		</output>
+    	</operation>
+    </binding>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     SERVICE DEFINITION - A service groups a set of ports into
+     a service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <service name="WS_invocationsService">
+        <port binding="tns:WS_invocationsBinding" name="WS_invocationsPort">
+    		<soap:address location="http://localhost:8080/ode/processes/WS_invocations"/>
+        </port>
+    </service>
+
+</definitions>

@@ -2,6 +2,7 @@
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
     
-    <jaxws:endpoint id="helloWorld" implementor="fr.keyconsulting.formation.service.HelloService" address="/HelloWorld"/>
-    
+    <jaxws:endpoint id="helloWorld" implementor="fr.keyconsulting.formation.service1.HelloService" address="/HelloWorld"/>
+      <jaxws:endpoint id="helloWorld2" implementor="fr.keyconsulting.formation.service2.HelloService2" address="/HelloWorld2"/>
+  
 </beans>

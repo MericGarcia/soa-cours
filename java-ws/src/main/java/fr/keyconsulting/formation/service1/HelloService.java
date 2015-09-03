@@ -1,4 +1,6 @@
-package fr.keyconsulting.formation.service;
+package fr.keyconsulting.formation.service1;
+
+import fr.keyconsulting.formation.service1.IHelloService;
 
 public class HelloService implements IHelloService {
 
