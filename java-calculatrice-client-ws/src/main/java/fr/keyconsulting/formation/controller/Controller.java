@@ -68,7 +68,7 @@ public class Controller implements Initializable {
 		calcul.setAuthor(author.getText());
 		tableView.getItems().add(calcul);
 		result.setText(calcul.execute().getValue().toPlainString());
-
+		title.setText(service.sayHi(calcul.getAuthor() != null && !calcul.getAuthor().isEmpty() ? calcul.getAuthor() : "inconnu"));
 	}
 
 }
