@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+
+<AnchorPane prefHeight="968.0" prefWidth="1024.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="fr.keyconsulting.formation.controller.Controller">
+	<children>
+		<VBox>
+			<children>
+				<HBox>
+					<children>
+						<Label fx:id="title" prefHeight="16.0" prefWidth="250">
+							<padding>
+								<Insets left="10.0" />
+							</padding>
+						</Label>
+					</children>
+					<padding>
+						<Insets left="10.0" top="10.0" />
+					</padding>
+				</HBox>
+				<HBox prefWidth="200.0">
+					<children>
+						<Label prefHeight="16.0" prefWidth="50.0" text="Left">
+							<padding>
+								<Insets left="10.0" right="10.0" />
+							</padding>
+						</Label>
+						<TextField fx:id="leftOperand" prefHeight="25.0"
+							prefWidth="50.0">
+							<HBox.margin>
+								<Insets left="10.0" right="10.0" />
+							</HBox.margin>
+						</TextField>
+						<Label prefHeight="16.0" prefWidth="80.0" text="Operator">
+							<padding>
+								<Insets left="10.0" />
+							</padding>
+						</Label>
+						<ChoiceBox fx:id="operator" prefWidth="50.0">
+							<HBox.margin>
+								<Insets left="10.0" right="10.0" />
+							</HBox.margin>
+						</ChoiceBox>
+						<Label prefHeight="16.0" prefWidth="50.0" text="Right">
+							<padding>
+								<Insets left="10.0" />
+							</padding>
+						</Label>
+						<TextField fx:id="rightOperand" prefWidth="50.0">
+							<HBox.margin>
+								<Insets left="10.0" right="10.0" />
+							</HBox.margin>
+						</TextField>
+					</children>
+					<padding>
+						<Insets left="10.0" top="10.0" />
+					</padding>
+				</HBox>
+				<HBox>
+					<children>
+						<Label prefHeight="16.0" prefWidth="80.0" text="Commentary :">
+							<padding>
+								<Insets left="10.0" />
+							</padding>
+						</Label>
+						<TextField fx:id="commentary" prefWidth="220.0">
+							<HBox.margin>
+								<Insets left="10.0" right="10.0" />
+							</HBox.margin>
+						</TextField>
+					</children>
+					<padding>
+						<Insets left="10.0" top="10.0" />
+					</padding>
+				</HBox>
+				<HBox>
+					<children>
+						<Label prefHeight="16.0" prefWidth="80.0" text="Author :">
+							<padding>
+								<Insets left="10.0" />
+							</padding>
+						</Label>
+						<TextField fx:id="author" prefWidth="220.0">
+							<HBox.margin>
+								<Insets left="10.0" right="10.0" />
+							</HBox.margin>
+						</TextField>
+					</children>
+					<padding>
+						<Insets left="10.0" top="10.0" />
+					</padding>
+				</HBox>
+				<HBox>
+					<children>
+						<Button mnemonicParsing="false" onAction="#run" text="Lancer" />
+					</children>
+					<padding>
+						<Insets left="10.0" top="10.0" />
+					</padding>
+				</HBox>
+				<Pane prefHeight="60.0" prefWidth="200.0">
+					<children>
+						<TextArea editable="false" fx:id="result" prefHeight="50.0"
+							prefWidth="430.0">
+							<padding>
+								<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+							</padding>
+						</TextArea>
+					</children>
+					<padding>
+						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+					</padding>
+					<VBox.margin>
+						<Insets bottom="10.0" left="10.0" right="10.0" top="30.0" />
+					</VBox.margin>
+				</Pane>
+				<HBox fx:id="hboxTable" prefWidth="450.0" visible="true">
+					<children>
+						<TableView fx:id="tableView" prefHeight="500.0">
+							<columns>
+								<TableColumn fx:id="columnCalcul" minWidth="250.0"
+									prefWidth="75.0" text="Calcul">
+									<cellValueFactory>
+										<PropertyValueFactory property="calculAsString" />
+									</cellValueFactory>
+								</TableColumn>
+								<TableColumn fx:id="time" minWidth="170.0"
+									prefWidth="75.0" text="Date">
+									<cellValueFactory>
+										<PropertyValueFactory property="time" />
+									</cellValueFactory>
+								</TableColumn>
+							</columns>
+						</TableView>
+					</children>
+					<padding>
+						<Insets left="10.0" top="10.0" />
+					</padding>
+				</HBox>
+			</children>
+		</VBox>
+	</children>
+</AnchorPane>
