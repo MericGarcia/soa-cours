@@ -56,8 +56,10 @@ public class Controller implements Initializable {
 	IHelloService service;
 
 	public void initialize(URL location, ResourceBundle resources) {
+		service = (IHelloService)context.getBean("helloClient");
 		operator.setItems(FXCollections.observableArrayList(Operators.all()));
 		time.setCellFactory(new DateTimeCellFactory<Calcul>());
+		title.setText(service.sayHi("inconnu"));
 	}
 
 	public void run(ActionEvent event) {
@@ -66,6 +68,7 @@ public class Controller implements Initializable {
 		calcul.setAuthor(author.getText());
 		tableView.getItems().add(calcul);
 		result.setText(calcul.execute().getValue().toPlainString());
+
 	}
 
 }
