@@ -1,3 +1,3 @@
 # soa-cours
-Some exercise on SOA
+Some exercises on SOA
 
