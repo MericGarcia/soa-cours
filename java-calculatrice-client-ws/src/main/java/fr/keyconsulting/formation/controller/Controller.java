@@ -13,7 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import fr.keyconsulting.formation.model.Calcul;
 import fr.keyconsulting.formation.model.Operand;
 import fr.keyconsulting.formation.model.Operators;
-import fr.keyconsulting.formation.service.JmsServiceHelper;
+import fr.keyconsulting.formation.service.ICalculService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,25 +59,23 @@ public class Controller implements Initializable {
 	@FXML
 	private TableColumn<Calcul, LocalDateTime> time;
 	
-	JmsServiceHelper service;
+	ICalculService calculService;
 
 	public void initialize(URL location, ResourceBundle resources) {
-		service = new JmsServiceHelper();
+		calculService = (ICalculService) context.getBean("calculClient");
 		operator.setItems(FXCollections.observableArrayList(Operators.all()));	
 		List<Calcul> calculs = new ArrayList<Calcul>();
 		time.setCellFactory(new DateTimeCellFactory<Calcul>());
 		StringJoiner sj = new StringJoiner(";");
-		addEnQueuedMessageTo(sj);
-		addEnQueuedCalculToList(calculs);
+		addWSCalculsToList(calculs);
 		addCalculsToTableItems(calculs);
 		previousAuthors.setText(sj.toString());
 	}
 
-	private void addEnQueuedCalculToList(List<Calcul> calculs) {
-		Calcul message = service.nextCalcul();
-		while(message!=null){
-			calculs.add(message);
-			message = service.nextCalcul();
+	private void addWSCalculsToList(List<Calcul> calculs) {
+		List<Calcul> incomingCalculs = calculService.getAll();
+		if( incomingCalculs != null && !incomingCalculs.isEmpty()){
+			calculs.addAll(incomingCalculs);
 		}
 	}
 
@@ -87,14 +85,6 @@ public class Controller implements Initializable {
 		}
 		else{
 			tableView.setItems(FXCollections.observableArrayList());
-		}
-	}
-
-	private void addEnQueuedMessageTo(StringJoiner sj) {
-		String message = service.next();
-		while(message!=null){
-			sj.add(message);
-			message = service.next();
 		}
 	}
 
@@ -108,9 +98,7 @@ public class Controller implements Initializable {
 	}
 
 	private void sendCalculAndAuthorToJmsServices(Calcul calcul) {
-		service.sendForListener(calcul.getAuthor() != null ? calcul.getAuthor() : "none");
-		service.send(calcul.getAuthor() != null ? calcul.getAuthor() : "none");
-		service.send(calcul);
+		calculService.addCalcul(calcul);
 	}
 	
 	
