@@ -13,19 +13,12 @@ public class CalculService implements ICalculService {
 
 	public List<Calcul> getAll() {
 		List<Calcul> calculs = new ArrayList<>();
-		Calcul next = service.nextCalcul();
-		while(next != null){
-			calculs.add(next);
-			next = service.nextCalcul();
-		}
+		//implementer ici la récupération des calculs présents dans la file
 		return calculs;
 	}
 
 	public void addCalcul(Calcul calc) {
-		if (calc.getTime() == null) {
-			calc.setTime(LocalDateTime.now());
-		}
-		service.send(calc);;
+		//implémenter ice l'envoi du calcul dans la file
 	}
 
 }

@@ -73,10 +73,7 @@ public class Controller implements Initializable {
 	}
 
 	private void addWSCalculsToList(List<Calcul> calculs) {
-		List<Calcul> incomingCalculs = calculService.getAll();
-		if( incomingCalculs != null && !incomingCalculs.isEmpty()){
-			calculs.addAll(incomingCalculs);
-		}
+		//implementer ici l'ajout des calculs provenant du WebService dans la liste.
 	}
 
 	private void addCalculsToTableItems(List<Calcul> calculs) {
@@ -98,7 +95,7 @@ public class Controller implements Initializable {
 	}
 
 	private void sendCalculAndAuthorToJmsServices(Calcul calcul) {
-		calculService.addCalcul(calcul);
+		//implementer ici l'appel du webservice d'ajout
 	}
 	
 	
